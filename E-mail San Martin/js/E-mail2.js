@@ -1,8 +1,16 @@
 var EmailApp = angular.module('EmailApp', []);
 EmailApp.controller('formController', function($scope,$http){
 console.log("Ejecutando..")
+
+/*Mandril-Function*/
 $scope.sendTheMail = function() {
+	/*Messege of entry*/
 	console.log("Estoy Dentro...")
+
+	/*Random Number*/
+	var order = Math.round(Math.random() * 1000000000);
+
+	/*Shops Dictionary*/
 	var info_stors = {
 	    "13 calle Zona Viva": [
 	        {
@@ -235,8 +243,7 @@ $scope.sendTheMail = function() {
 	            "schedule": "de 7:00 a.m. a 10:00 p.m.",
 	        }
 	    ]
-	};+
-	 0
+	};
 
 	// key genera al momento de registrar tu aoo en Mandrill esta no la copies registra tu app y ya te la dan 
 	var apiKey = '2ZMRx5Wr9KOKm3hCKTfc4Q';
@@ -249,23 +256,13 @@ $scope.sendTheMail = function() {
 	var email = $("#emailField").val();
 	var occasion = $("#occasionField").val();
 	var messege = $("#messegeField").val();
-	var store = $("#storeField").val();
+	var store = $("#storeField").find(":selected").text();
 	var date = $("#dateField").val();
 
+	/*variables of the dictionary values*/
 	var address = info_stors[store][0]["address"];
 	var telephone = info_stors[store][0]["telephone"];
 	var schedule = info_stors[store][0]["schedule"];
-
-	var company = "San Martin"
-	var title = $("#titleField").val();
-	var city = $("#cityField").val();
-	var kindProffesional =  $("#kindProffesional").val();
-	var messageString = $("#messageField").val();
-
-
-	document.messege.style.fontSize="30px"; 
-	//document.getElementById('messegeField').style.color = 'red';
-	console.log(messege);
 
 	$("#fromField").val("");
 	$("#toField").val("");
@@ -274,19 +271,9 @@ $scope.sendTheMail = function() {
 	$("#messegeField").val("");
 	$("#storeField").val("Store");
 	$("#dateField").val("");
-
-	$("#titleField").val("");
-	$("#companyField").val("");
-	
 	$("#telephoneField").val("");
-	$("#cityField").val("");
-	$("#kindProffesional").val("");
-	$("#messageField").val("");
-	$("#countryField").val("");
-	console.log(from);
-	//console.log(info_stors);
-	console.log(info_stors[store][0]["telephone"]);
 
+	/*Change the value of Occasion variable*/
 	if (occasion === "Birthday"){
 		occasion = "Cumpleaños";
 	}
@@ -297,20 +284,28 @@ $scope.sendTheMail = function() {
 		occasion = "Fiesta";
 	}
 	else if(occasion === "Special Occasion"){
-		occasion = "Ocasión especial";
+		occasion = "Ocasión Especial";
 	}
-	//datos que se escriben en mensaje del correo
-	//var messageBody = "Hola "+ to +"\nDe: " + from + "\nPara: " + to  + "\nCompanía: " + company + "\nDirección: " + address + "\nHorario: " + schedule + "\nE-mail: "+ email + "\nTelefono: " + telephone +"\nOcasión: "+occasion +"\nMensaje: "+ messege +"\nTienda: "+ store +"\nFecha: "+date+ "\nPaís:  " + country + "\nCiudad:  " + city + "\nWhat kind of proffesional are you loking for? " + kindProffesional  +"\nTechnical needs: "+messageString;
+	else if (occasion === "Other"){
+		occasion = "";
+	}
+	/*Content of message variable*/
+	var messageBody = "<img src='http://www.sanmartinbakery.com/wp-content/uploads/2015/08/san-martin-tipografia.png' alt='San Martin Logo'><br>" +
+						"<br><h1><i><font size='6' color='#999999' face='times new roman, serif'>Hola " + to +"!</font></i></h1><br>" +
+						"<p><font style='color:rgb(0,0,0);font-family:arial,helvetica,sans-serif'>Te damos un cordial saludo de parte de Panaderia San Martin.</font><font face='arial, helvetica, sans-serif' style='color:rgb(0,0,0)'> Para nosotros es un gusto felicitarle y notificarle que </font><b><i><font face='times new roman, serif' size='4' color='#666666'>" + from + "</font></i></b><font face='arial, helvetica, sans-serif' style='color:rgb(0,0,0)'> te manda un saludo por tu </font><b><i><font face='times new roman, serif' size='4' color='#666666'>"+ occasion +"</font></i></b><font face='arial, helvetica, sans-serif' style='color:rgb(0,0,0)'>, tambien desea transmitirte el siguiente mensaje: </font></p><br>"+
+						'<p><font face="times new roman, serif" size="4" color="#666666"><b><i>"' + messege +'."</i></b></font></p><br>'+
+						"<p><font face='arial, helvetica, sans-serif' color='#000000'>Y te ha mandado un obsequio a traves de nuestras tiendas online, puedes pasar a recogerlo el " + date + " en nuestra tienda "+ store +" ubicada en: "+address+" Nuestro horario de atencion es "+ schedule +".</font></p><br>"+
+						"<p style='font-size:12.8px'><font size='4' face='times new roman, serif' color='#666666'><i><b>Tu codigo de orden es: "+ order +"</b></i></font><span style='font-family:arial,helvetica,sans-serif;color:rgb(0,0,0);font-size:12.8px'><br></span></p><br>"+
+						"<p><font color='#000000'><font face='arial, helvetica, sans-serif'>Si tienes alguna duda por favor comunicate al número <a href='tel:2420-9916' value='+50224209916' target='_blank'>"+ telephone +"</a> para nosotros será un gusto atenderte.</font></font></p>";
+
 	/*Json donde  se guardan los   parametros a enviar donde : from_email es el correo que es el va a parecer q envio el mail,
 	to es a quien se lo vas a enviar ,subject es el titulo del correo y en text mandas todos los datos de tus campos*/
-	var messageBody = "Hola " + to + '!\n\nTe damos un cordial saludo de parte de Panaderia San Martin.\n\nPara nosotros es un gusto felicitarle y notificarle que ' + from + ' le manda un saludo por su '+ occasion +', tambien desea transmitirle el siguiente mensaje: \n\n"' + messege +'."\n\nY te ha mandado un obsequio a traves de nuestras tiendas online, puedes pasar a recogerlo el ' + date + ' en nuestra tienda \n'+ store +" ubicada en: "+address+" Nuestro horario de atencion es "+ schedule +" si tienes alguna duda por favor comunicate al número "+ telephone +" para nosotros será un gusto atenderte.";
-
 	var params = {
 		"message": {
 			"from_email":"kherrera16@gmail.com",
 			"to":[{"email":email}],
 			"subject": "Ordering Information",
-			"text": messageBody
+			"html": messageBody
 		}
 	};
 

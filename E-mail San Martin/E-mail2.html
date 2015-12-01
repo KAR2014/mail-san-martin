@@ -5,13 +5,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script type="text/javascript" src = 'mandrill-min.js'></script>
+    <script type="text/javascript" src = 'js/mandrill-min.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
 
 
 	<meta charset="UTF-8">
 	<title>E-mail_San Martín</title>
-    <link rel="stylesheet" type="text/css" href="ejemplo.css">
+    <link rel="stylesheet" type="text/css" href="css/E-mail2.css">
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
 </head>
 <body ng-app = 'EmailApp' , ng-controller ='formController'>
@@ -63,7 +63,7 @@
         <center>
             <p class="required-field">*
             <label for="nombre" placeholder="Store" name="Name" ng-model="Name" ng-required="true" class="form-control store-input"></label><select type="text" name="store" id="storeField"><br/>
-            <option>13 calle Zona Viva</option>
+            <option value="0">13 calle Zona Viva</option>
             <option value="1">9a Calle Zona 14</option>
             <option value="2">Av. Petapa</option>
             <option value="3">C.C. Aguilar Batres</option>
@@ -110,6 +110,6 @@
     <br/>
     <center>
     <button ng-click="sendTheMail()" class="send btn btn-default btn-submit"><img src="images/icons/img_submit.png" class="img-responsive" alt="btn submit"></button></center>
-<script type="text/javascript" src="E-mail2.js"></script>
+<script type="text/javascript" src="js/E-mail2.js"></script>
 </body>
 </html>
