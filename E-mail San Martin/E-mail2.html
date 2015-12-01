@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/E-mail2.css">
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
 </head>
-<body ng-app = 'EmailApp' , ng-controller ='formController'>
+<body>
     <center>
         <h1 class='top'>E-mail_San Martín</h1>
     </ center>
@@ -103,13 +103,14 @@
     <div id="form" ng-class="{'has-error':formcontact-us.Name.$dirty &amp;&amp; formcontact-us.Name.$invalid , 'has-success':formcontact-us.From.$dirty &amp;&amp; formcontact-us.Name.$valid}" class="form-group">
         <center>
             <p class="required-field">*
-        <input id="dateField" type="text" placeholder="Please choose a pickup date." name="Date" ng-model="Date" ng-required="true" class="form-control date-input"></p>
+            <input id="dateField" placeholder="Please choose a pickup date." ng-model="Date" ng-required="true" class="form-control date-input" type="date" name="cumpleanios" step="1" min="2015-01-01" max="2020-12-31" value="2015-11-02">
+            <!--<input id="dateField" type="text" placeholder="Please choose a pickup date." name="Date" ng-model="Date" ng-required="true" class="form-control date-input"></p>-->
         </center>
     </div>
 
     <br/>
     <center>
-    <button ng-click="sendTheMail()" class="send btn btn-default btn-submit"><img src="images/icons/img_submit.png" class="img-responsive" alt="btn submit"></button></center>
+    <button onclick="sendMail()" ng-click="sendTheMail()" class="send btn btn-default btn-submit"><img src="images/icons/img_submit.png" class="img-responsive" alt="btn submit"></button></center>
 <script type="text/javascript" src="js/E-mail2.js"></script>
 </body>
 </html>

@@ -1,14 +1,14 @@
-var EmailApp = angular.module('EmailApp', []);
-EmailApp.controller('formController', function($scope,$http){
 console.log("Ejecutando..")
 
 /*Mandril-Function*/
-$scope.sendTheMail = function() {
+function sendMail() {
 	/*Messege of entry*/
 	console.log("Estoy Dentro...")
 
 	/*Random Number*/
-	var order = Math.round(Math.random() * 1000000000);
+	var day = new Date();
+	var order = Math.round(Math.random() * 100)*day.getTime();
+
 
 	/*Shops Dictionary*/
 	var info_stors = {
@@ -250,28 +250,27 @@ $scope.sendTheMail = function() {
 	//OBJETO MADRIL QUE RECIBE DE PARAMETRO TU KEY
 	var m = new mandrill.Mandrill(apiKey);
 	// campos del formulario 
-	var country = $("#countryField").val();
-	var from = $("#fromField").val(); 
-	var to = $("#toField").val();
-	var email = $("#emailField").val();
-	var occasion = $("#occasionField").val();
-	var messege = $("#messegeField").val();
-	var store = $("#storeField").find(":selected").text();
-	var date = $("#dateField").val();
+	var from = document.getElementById("fromField").value;
+	var to = document.getElementById("toField").value;
+	var email = document.getElementById("emailField").value;
+	var occasion = document.getElementById("occasionField").value;
+	var messege = document.getElementById("messegeField").value;
+	var store = document.getElementById("storeField");
+	var selected = store.options[store.selectedIndex].text;
+	var date = document.getElementById("dateField").value;
 
 	/*variables of the dictionary values*/
-	var address = info_stors[store][0]["address"];
-	var telephone = info_stors[store][0]["telephone"];
-	var schedule = info_stors[store][0]["schedule"];
+	var address = info_stors[selected][0]["address"];
+	var telephone = info_stors[selected][0]["telephone"];
+	var schedule = info_stors[selected][0]["schedule"];
 
-	$("#fromField").val("");
-	$("#toField").val("");
-	$("#emailField").val("");
-	$("#occasionField").val("Occasion");
-	$("#messegeField").val("");
-	$("#storeField").val("Store");
-	$("#dateField").val("");
-	$("#telephoneField").val("");
+	document.getElementById("fromField").value = "";
+	document.getElementById("toField").value = "";
+	document.getElementById("emailField").value = "";
+	document.getElementById("occasionField").value = "";
+	document.getElementById("messegeField").value = "";
+	document.getElementById("storeField").value = "";
+	document.getElementById("dateField").value = "";
 
 	/*Change the value of Occasion variable*/
 	if (occasion === "Birthday"){
@@ -294,7 +293,7 @@ $scope.sendTheMail = function() {
 						"<br><h1><i><font size='6' color='#999999' face='times new roman, serif'>Hola " + to +"!</font></i></h1><br>" +
 						"<p><font style='color:rgb(0,0,0);font-family:arial,helvetica,sans-serif'>Te damos un cordial saludo de parte de Panaderia San Martin.</font><font face='arial, helvetica, sans-serif' style='color:rgb(0,0,0)'> Para nosotros es un gusto felicitarte y notificarte que </font><b><i><font face='times new roman, serif' size='4' color='#666666'>" + from + "</font></i></b><font face='arial, helvetica, sans-serif' style='color:rgb(0,0,0)'> te manda un saludo por tu </font><b><i><font face='times new roman, serif' size='4' color='#666666'>"+ occasion +"</font></i></b><font face='arial, helvetica, sans-serif' style='color:rgb(0,0,0)'>, tambien desea transmitirte el siguiente mensaje: </font></p><br>"+
 						'<p><font face="times new roman, serif" size="4" color="#666666"><b><i>"' + messege +'."</i></b></font></p><br>'+
-						"<p><font face='arial, helvetica, sans-serif' color='#000000'>Y te ha mandado un obsequio a traves de nuestras tiendas online, puedes pasar a recogerlo el " + date + " en nuestra tienda "+ store +" ubicada en: "+address+" Nuestro horario de atencion es "+ schedule +".</font></p><br>"+
+						"<p><font face='arial, helvetica, sans-serif' color='#000000'>Y te ha mandado un obsequio a traves de nuestras tiendas online, puedes pasar a recogerlo el " + date + " en nuestra tienda "+ selected +" ubicada en: "+address+" Nuestro horario de atencion es "+ schedule +".</font></p><br>"+
 						"<p style='font-size:12.8px'><font size='4' face='times new roman, serif' color='#666666'><i><b>Tu codigo de orden es: "+ order +"</b></i></font><span style='font-family:arial,helvetica,sans-serif;color:rgb(0,0,0);font-size:12.8px'><br></span></p><br>"+
 						"<p><font color='#000000'><font face='arial, helvetica, sans-serif'>Si tienes alguna duda por favor comunicate al número <a href='tel:2420-9916' value='+50224209916' target='_blank'>"+ telephone +"</a> para nosotros será un gusto atenderte.</font></font></p>";
 
@@ -319,5 +318,4 @@ $scope.sendTheMail = function() {
 	});
 		console.log("fin ejecucion");
 		alert("Send Messege");
-	};
-});
+};
